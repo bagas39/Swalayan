@@ -219,6 +219,9 @@
         let allProducts = [];
         let cart = {}; 
         let currentTotal = 0; 
+
+        let currentUserId = null; 
+
         const addItemForm = document.getElementById('add-item-form');
         const skuInput = document.getElementById('sku-input');
         const qtyInput = document.getElementById('qty-input');
@@ -292,7 +295,6 @@
                 return;
             }
 
-            // Normalisasi: Cek snake_case atau camelCase
             const product = allProducts.find(p => 
                 (p.id_barang || p.idBarang).toString() === sku || 
                 (p.nama_barang || p.namaBarang).toLowerCase() === sku.toLowerCase()
@@ -303,7 +305,6 @@
                 return;
             }
 
-            // Gunakan ID yang valid (prioritas id_barang, fallback idBarang)
             const id = product.id_barang || product.idBarang;
             const nama = product.nama_barang || product.namaBarang;
             const harga = product.harga_jual || product.hargaJual;
@@ -319,7 +320,6 @@
             if (cart[id]) {
                 cart[id].jumlah += qty;
             } else {
-                // Simpan item dengan key yang dinormalisasi untuk tampilan
                 cart[id] = { 
                     id_barang: id, 
                     nama_barang: nama, 
@@ -405,12 +405,13 @@
         }
 
         async function submitTransaction() {
-            const idKasir = 1; 
+            if (!currentUserId) {
+                showMessage('Error Sesi', 'Data kasir tidak ditemukan. Silakan refresh atau login ulang.', true);
+                return;
+            }
 
-            // --- PERBAIKAN PENTING DI SINI ---
-            // Mapping data agar sesuai dengan @JsonProperty("idBarang") di ItemKeranjang.java
             const itemsToSubmit = Object.values(cart).map(item => ({
-                idBarang: item.id_barang, // MAPPING KE CAMELCASE (sesuai @JsonProperty)
+                idBarang: item.id_barang, 
                 jumlah: item.jumlah
             }));
 
@@ -434,9 +435,8 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    // Kirim payload dengan idKasir dan items (sesuai @JsonProperty di TransaksiRequest.java)
                     body: JSON.stringify({
-                        idKasir: idKasir,
+                        idKasir: currentUserId, 
                         items: itemsToSubmit 
                     })
                 });
@@ -498,6 +498,8 @@
         .then(user => {
             if(user) {
                 document.getElementById('user-display').textContent = `Halo, ${user.nama} (${user.role})`;
+
+                currentUserId = user.id;
 
                 const role = user.role; 
                 

@@ -2,7 +2,6 @@ package com.swalayan.controller;
 
 import com.swalayan.models.Barang;
 import com.swalayan.service.BarangService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +9,11 @@ import java.util.Map;
 @RestController
 public class BarangController {
 
-    @Autowired
-    private BarangService barangService;
+    private final BarangService barangService;
+
+    public BarangController(BarangService barangService) {
+        this.barangService = barangService;
+    }
 
     @GetMapping("/api/barang")
     public List<Barang> getBarang() {
