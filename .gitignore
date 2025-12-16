@@ -34,3 +34,5 @@ build/
 
 *.class
 *.log
+
+.env
