@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Pengguna - Swalayan Segar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .modal-backdrop { background-color: rgba(0,0,0,0.5); }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <nav class="w-64 h-full bg-gray-900 text-white flex flex-col fixed">
+            <div class="px-6 py-5 border-b border-gray-700">
+                <div class="text-2xl font-bold">SWALAYAN SEGAR</div>
+                <div id="user-display" class="text-m text-gray-200 mt-1 font-normal">Loading...</div>
+            </div>
+            <ul class="flex-1 py-4 space-y-2">
+            <li style="display: none">
+                <a href="/" class="flex items-center space-x-3 px-6 py-3 text-gray-300 hover:bg-gray-700 rounded-lg mx-3 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h12A2.25 2.25 0 0 0 20.25 14.25V3m-16.5 0h16.5m-16.5 0v6.75A2.25 2.25 0 0 0 6 12h12a2.25 2.25 0 0 0 2.25-2.25V3" />
+                    </svg>
+                    <span>Kasir</span>
+                </a>
+            </li>
+            <li style="display: none">
+                <a href="/transaksi_penjualan" class="flex items-center space-x-3 px-6 py-3 text-gray-300 hover:bg-gray-700 rounded-lg mx-3 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z" />
+                    </svg>
+                    <span>Transaksi Penjualan</span>
+                </a>
+            </li>
+            <li style="display: none">
+                <a href="/manajemen_stok" class="flex items-center space-x-3 px-6 py-3 text-gray-300 hover:bg-gray-700 rounded-lg mx-3 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                    </svg>
+                    <span>Manajemen Stok</span>
+                </a>
+            </li>
+            <li style="display: none">
+                <a href="/transaksi_pembelian" class="flex items-center space-x-3 px-6 py-3 text-gray-300 hover:bg-gray-700 rounded-lg mx-3 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296A3.745 3.745 0 0 1 16.5 21a3.745 3.745 0 0 1-2.863-1.636A3.745 3.745 0 0 1 12 21a3.745 3.745 0 0 1-2.863-1.636A3.745 3.745 0 0 1 7.5 21a3.745 3.745 0 0 1-2.863-1.636A3.745 3.745 0 0 1 3 18.068A3.745 3.745 0 0 1 1.5 15c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296A3.745 3.745 0 0 1 7.5 3a3.745 3.745 0 0 1 2.863 1.636A3.745 3.745 0 0 1 12 3a3.745 3.745 0 0 1 2.863 1.636A3.745 3.745 0 0 1 16.5 3a3.745 3.745 0 0 1 2.863 1.636A3.745 3.745 0 0 1 21 5.932A3.745 3.745 0 0 1 22.5 9c0 1.268-.63 2.39-1.593 3.068A3.745 3.745 0 0 1 21 12Z" />
+                    </svg>
+                    <span>Transaksi Pembelian</span>
+                </a>
+            </li>
+            <li style="display: none">
+                <a href="/stok_opname" class="flex items-center space-x-3 px-6 py-3 text-gray-300 hover:bg-gray-700 rounded-lg mx-3 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+                    </svg>
+                    <span>Stok Opname</span>
+                </a>
+            </li>
+            <li style="display: none">
+                <a href="/prediksi_stok" class="flex items-center space-x-3 px-6 py-3 text-gray-300 hover:bg-gray-700 rounded-lg mx-3 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+                    </svg>
+                    <span>Prediksi Stok</span>
+                </a>
+            </li>
+            <li style="display: none">
+                <a href="/laporan_keuangan" class="flex items-center space-x-3 px-6 py-3 text-gray-300 hover:bg-gray-700 rounded-lg mx-3 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h15.75c.621 0 1.125.504 1.125 1.125v6.75c0 .621-.504 1.125-1.125 1.125H4.125c-.621 0-1.125-.504-1.125-1.125v-6.75Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125v-6.75a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 6.375v6.75" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12c0-1.657-1.343-3-3-3s-3 1.343-3 3h6Z" />
+                    </svg>
+                    <span>Laporan Keuangan</span>
+                </a>
+            </li>
+                
+            <li style="display: none">
+                    <a href="/manajemen_pengguna" class="flex items-center space-x-3 px-6 py-3 bg-green-600 text-white font-semibold rounded-lg mx-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                        </svg>
+                        <span>Pengguna</span>
+                    </a>
+            </li>
+            </ul>
+            <div class="p-4 border-t border-gray-800 mt-auto">
+                <a href="/logout" class="flex items-center space-x-3 px-6 py-3 text-red-400 hover:bg-gray-800 rounded-lg transition">
+                    <span>Keluar</span>
+                </a>
+            </div>
+        </nav>
+        <main class="flex-1 ml-64 h-screen overflow-y-auto">
+            <div class="p-8">
+                <header class="flex justify-between items-center mb-6">
+                    <h1 class="text-3xl font-bold text-gray-800">Manajemen Pengguna</h1>
+                    <button onclick="openModal()" class="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold shadow-md hover:bg-green-700 transition">+ Tambah Pengguna</button>
+                </header>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Lengkap</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-table-body" class="bg-white divide-y divide-gray-200">
+                            <tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">Memuat data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div id="user-modal" class="fixed inset-0 modal-backdrop hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl shadow-xl p-6 w-full max-w-md m-4 transform transition-all">
+            <h3 id="modal-title" class="text-xl font-bold text-gray-800 mb-4">Tambah Pengguna Baru</h3>
+            <form id="user-form" class="space-y-4">
+                <input type="hidden" id="edit-id">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Role / Jabatan</label>
+                    <select id="input-role" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500" onchange="togglePhoneInput()">
+                        <option value="Kasir">Kasir</option>
+                        <option value="Gudang">Penjaga Gudang</option>
+                        <option value="Supervisor">Supervisor</option>
+                        <option value="Owner">Owner</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
+                    <input type="text" id="input-nama" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Username</label>
+                    <input type="text" id="input-username" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="input-password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500">
+                    <p id="password-hint" class="text-xs text-gray-500 mt-1 hidden">Biarkan kosong jika tidak ingin mengubah password.</p>
+                </div>
+                <div id="phone-container">
+                    <label class="block text-sm font-medium text-gray-700">No. HP</label>
+                    <input type="text" id="input-hp" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500">
+                </div>
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">Batal</button>
+                    <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const tableBody = document.getElementById('user-table-body');
+        const modal = document.getElementById('user-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const form = document.getElementById('user-form');
+        let isEditMode = false; 
+        fetch('/api/me').then(res => res.json()).then(user => { if(user) document.getElementById('user-display').textContent = `Halo, ${user.nama}`; });
+        function togglePhoneInput() {
+            const role = document.getElementById('input-role').value;
+            const phoneDiv = document.getElementById('phone-container');
+            if (role === 'Kasir') { phoneDiv.classList.remove('hidden'); } else { phoneDiv.classList.add('hidden'); }
+        }
+        async function loadUsers() {
+            try {
+                const res = await fetch('/api/users');
+                const users = await res.json();
+                tableBody.innerHTML = '';
+                if(users.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="4" class="px-6 py-4 text-center">Belum ada data.</td></tr>';
+                    return;
+                }
+                users.forEach(u => {
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-gray-50';
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${u.nama}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${u.username}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                            ${u.role === 'Owner' ? 'bg-purple-100 text-purple-800' : 
+                              u.role === 'Kasir' ? 'bg-green-100 text-green-800' : 
+                              u.role === 'Supervisor' ? 'bg-blue-100 text-blue-800' : 'bg-yellow-100 text-yellow-800'}">
+                                ${u.role}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium space-x-2">
+                            <button onclick="openEditModal(${u.id}, '${u.role}')" class="text-indigo-600 hover:text-indigo-900">Edit</button>
+                            <button onclick="deleteUser(${u.id}, '${u.role}')" class="text-red-600 hover:text-red-900">Hapus</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (err) {
+                console.error(err);
+                tableBody.innerHTML = '<tr><td colspan="4" class="px-6 py-4 text-center text-red-500">Gagal memuat data.</td></tr>';
+            }
+        }
+        function openModal() {
+            isEditMode = false;
+            modalTitle.textContent = "Tambah Pengguna Baru";
+            form.reset();
+            document.getElementById('input-role').disabled = false;
+            document.getElementById('password-hint').classList.add('hidden');
+            document.getElementById('input-password').required = true;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            togglePhoneInput(); 
+        }
+        async function openEditModal(id, role) {
+            isEditMode = true;
+            modalTitle.textContent = "Edit Pengguna";
+            try {
+                const res = await fetch(`/api/users/${role}/${id}`);
+                if (!res.ok) throw new Error("Gagal mengambil data");
+                const user = await res.json();
+                document.getElementById('edit-id').value = user.id;
+                document.getElementById('input-nama').value = user.nama;
+                document.getElementById('input-username').value = user.username;
+                document.getElementById('input-role').value = user.role;
+                if (user.role === 'Kasir' && user.noHp) { document.getElementById('input-hp').value = user.noHp; } else { document.getElementById('input-hp').value = ''; }
+                document.getElementById('input-role').disabled = true;
+                document.getElementById('password-hint').classList.remove('hidden');
+                document.getElementById('input-password').required = false;
+                document.getElementById('input-password').value = '';
+                togglePhoneInput();
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } catch (err) {
+                alert("Gagal memuat data user.");
+                console.error(err);
+            }
+        }
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            form.reset();
+        }
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const role = document.getElementById('input-role').value;
+            const id = document.getElementById('edit-id').value;
+            const data = {
+                role: role,
+                nama: document.getElementById('input-nama').value,
+                username: document.getElementById('input-username').value,
+                password: document.getElementById('input-password').value,
+                noHp: document.getElementById('input-hp').value
+            };
+            let url = '/api/users'; let method = 'POST';
+            if (isEditMode) { url = `/api/users/${role}/${id}`; method = 'PUT'; }
+            try {
+                const res = await fetch(url, { method: method, headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) });
+                const result = await res.json();
+                if(result.success) {
+                    closeModal();
+                    loadUsers();
+                    alert(isEditMode ? 'User berhasil diperbarui!' : 'User berhasil ditambahkan!');
+                } else {
+                    alert('Gagal: ' + result.message);
+                }
+            } catch (err) {
+                alert('Terjadi kesalahan sistem.');
+            }
+        });
+        async function deleteUser(id, role) {
+            if(!confirm(`Yakin ingin menghapus ${role} ini?`)) return;
+            try {
+                const res = await fetch(`/api/users/${role}/${id}`, { method: 'DELETE' });
+                const result = await res.json();
+                if(result.success) {
+                    loadUsers();
+                } else {
+                    alert('Gagal menghapus: ' + result.message);
+                }
+            } catch (err) {
+                alert('Gagal menghapus data.');
+            }
+        }
+        document.addEventListener('DOMContentLoaded', loadUsers);
+        fetch('/api/me').then(res => res.json()).then(user => {
+            if(user) {
+                document.getElementById('user-display').textContent = `Halo, ${user.nama} (${user.role})`;
+                const role = user.role;
+                const menuItems = {
+                    'Kasir': ['/', '/manajemen_stok'],
+                    'Gudang': ['/stok_opname', '/manajemen_stok', '/prediksi_stok', '/transaksi_pembelian'],
+                    'Owner': ['/laporan_keuangan', '/manajemen_pengguna'],
+                    'Supervisor': ['/stok_opname', '/manajemen_stok', '/prediksi_stok', '/transaksi_pembelian', '/transaksi_penjualan', '/manajemen_pengguna']
+                };
+                const allowed = menuItems[role] || [];
+                const links = document.querySelectorAll('nav ul li a');
+                links.forEach(link => { const href = link.getAttribute('href'); if (allowed.includes(href)) { link.parentElement.style.display = 'block'; } });
+            }
+        }).catch(err => { console.error("Gagal cek sesi", err); window.location.href = '/login'; });
+    </script>
+</body>
+</html>
